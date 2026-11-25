@@ -2,9 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { ArrowDown, ArrowUpRight, Bookmark, Flag, MapPin, Search, Target, BookOpen, CloudSun, CalendarDays } from "lucide-react";
+import facilities from "./facilities";
 
-const categories = ["전체", "골프장", "연습장", "라운드 준비"];
+const categories = ["전체", "같은 건물", "골프 피팅", "골프장", "연습장", "라운드 준비"];
 const resources = [
+  ...facilities.map((facility) => ({
+    ...facility,
+    category: facility.category ?? "연습장",
+    icon: MapPin,
+    href: `https://map.naver.com/p/search/${encodeURIComponent(`${facility.title} ${facility.address}`)}`,
+  })),
   { id: "courses", category: "골프장", title: "내 주변 골프장 찾기", copy: "지도에서 골프장 위치와 이용 정보를 확인하세요.", icon: MapPin, href: "https://map.naver.com/p/search/골프장" },
   { id: "practice", category: "연습장", title: "가까운 골프 연습장", copy: "실내외 연습장과 스크린 골프장을 찾아보세요.", icon: Target, href: "https://map.naver.com/p/search/골프%20연습장" },
   { id: "rules", category: "라운드 준비", title: "골프 규칙 살펴보기", copy: "라운드 전에 공식 골프 규칙을 확인하세요.", icon: BookOpen, href: "https://www.randa.org/ko-KR/rog/the-rules-of-golf" },
@@ -40,9 +47,9 @@ export default function Portal() {
 
   const terms = query.trim().toLowerCase().split(/\s+/);
   const results = resources.filter((resource) =>
-    (category === "전체" || resource.category === category) &&
+    (category === "전체" || (category === "같은 건물" ? resource.inBuilding : resource.category === category)) &&
     (!savedOnly || saved.includes(resource.id)) &&
-    terms.every((term) => [resource.title, resource.category, resource.copy].join(" ").toLowerCase().includes(term))
+    terms.every((term) => [resource.title, resource.category, resource.copy, resource.district, resource.address, resource.keywords].join(" ").toLowerCase().includes(term))
   );
 
   return (
@@ -61,13 +68,13 @@ export default function Portal() {
           <div className="hero-content">
             <p className="eyebrow">BR GOLF PORTAL</p>
             <h1 id="hero-title">다음 라운드,<br />여기서 시작하세요.</h1>
-            <p className="intro">골프장부터 연습장, 라운드 준비까지 한곳에서.</p>
+            <p className="intro">부산 사직동과 주변의 골프 시설, 라운드 준비 정보를 찾아보세요.</p>
             <form className="search" role="search" onSubmit={(event) => {
               event.preventDefault();
               document.getElementById("directory").scrollIntoView();
             }}>
               <Search size={20} aria-hidden="true" />
-              <input type="search" aria-label="포털 정보 검색" placeholder="골프장, 연습장, 날씨 검색" value={query} onChange={(event) => { setQuery(event.target.value); setCategory("전체"); setSavedOnly(false); }} />
+              <input type="search" aria-label="포털 정보 검색" placeholder="사직동, 연습장, 시설명 검색" value={query} onChange={(event) => { setQuery(event.target.value); setCategory("전체"); setSavedOnly(false); }} />
               <button type="submit">검색</button>
             </form>
           </div>
@@ -76,21 +83,32 @@ export default function Portal() {
 
         <section className="directory" id="directory" aria-labelledby="directory-title">
           <h2 id="directory-title">{savedOnly ? "즐겨찾기" : "골프 디렉터리"}</h2>
+          {!savedOnly && <p className="copy directory-intro">사직 자이언츠파크 입점 업체를 먼저 소개합니다.</p>}
           <div className="filters" aria-label="카테고리">
             {categories.map((item) => <button type="button" key={item} aria-pressed={!savedOnly && category === item} onClick={() => { setCategory(item); setSavedOnly(false); }}>{item}</button>)}
           </div>
-          <p className="count" role="status">{results.length}개 항목</p>
+          <p className="count" role="status">{query.trim() && `‘${query.trim()}’ 검색 결과 `}{results.length}개 항목</p>
           {results.length === 0 && <p className="empty">{savedOnly ? "저장한 항목이 없습니다." : "검색 결과가 없습니다. 다른 검색어나 카테고리를 선택해 보세요."}</p>}
           <div className="cards">
-            {results.map(({ id, title, copy, category: label, icon: Icon, href }) => (
+            {results.map(({ id, title, copy, category: label, icon: Icon, href, address, district, inBuilding }) => (
               <article className="card" key={id}>
                 <div className="card-top">
                   <span className="tile"><Icon size={22} aria-hidden="true" /></span>
                   <button type="button" className="bookmark" aria-label={title + " 즐겨찾기"} aria-pressed={saved.includes(id)} onClick={() => toggleSaved(id)}><Bookmark size={20} aria-hidden="true" /></button>
                 </div>
-                <p className="category">{label}</p>
-                <h3><a href={href}>{title} <ArrowUpRight size={17} aria-hidden="true" /></a></h3>
-                <p className="copy">{copy}</p>
+                <p className="category">{label}{inBuilding ? " · 자이언츠파크" : district && ` · ${district}`}</p>
+                {address ? (
+                  <>
+                    <h3>{title}</h3>
+                    <p className="copy">{address}</p>
+                    <a className="map-link" href={href} aria-label={`${title} 네이버 지도에서 보기`}>네이버 지도에서 보기 <ArrowUpRight size={15} aria-hidden="true" /></a>
+                  </>
+                ) : (
+                  <>
+                    <h3><a href={href}>{title} <ArrowUpRight size={17} aria-hidden="true" /></a></h3>
+                    <p className="copy">{copy}</p>
+                  </>
+                )}
               </article>
             ))}
           </div>

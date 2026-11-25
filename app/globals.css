@@ -37,6 +37,7 @@ h1 { font-size: clamp(2.2rem, 6vw, 4.65rem); letter-spacing: -.085em; line-heigh
 .search button { background: var(--lime); color: var(--ink); font-weight: 750; border: 0; border-radius: 7px; padding: 9px 16px; white-space: nowrap; }
 .down { position: absolute; right: 24px; bottom: 24px; border: 1px solid #ffffff69; border-radius: 50%; padding: 10px; display: grid; place-items: center; }
 .directory { padding-block: 50px; scroll-margin-top: 18px; }
+.directory .directory-intro { margin-bottom: 16px; }
 h2 { font-size: clamp(1.65rem, 3vw, 2.35rem); margin-bottom: 18px; letter-spacing: -.06em; }
 .filters { display: flex; flex-wrap: wrap; gap: 8px; }
 .filters button { border: 1px solid var(--line); border-radius: 99px; background: #fff; padding: 8px 16px; color: var(--ink); }
@@ -56,6 +57,8 @@ h2 { font-size: clamp(1.65rem, 3vw, 2.35rem); margin-bottom: 18px; letter-spacin
 .card h3 a:hover { text-decoration: underline; }
 .card h3 svg { flex: none; }
 .copy, .empty { color: var(--muted); font-size: .92rem; line-height: 1.6; margin-bottom: 0; }
+.map-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 12px; color: var(--green); font-size: .85rem; font-weight: 700; }
+.map-link:hover { text-decoration: underline; }
 .checklist { display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; background: #e9eedf; border-radius: 16px; padding: clamp(22px, 4vw, 45px); scroll-margin-top: 18px; }
 .checklist .eyebrow { color: #456432; margin-bottom: 8px; }
 .checklist h2, .checklist ul { margin: 0; }
