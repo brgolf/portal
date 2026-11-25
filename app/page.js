@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ArrowDown, ArrowUpRight, Bookmark, Flag, MapPin, Search, Target, BookOpen, CloudSun, CalendarDays } from "lucide-react";
 import facilities from "./facilities";
 
-const categories = ["전체", "같은 건물", "골프 피팅", "골프장", "연습장", "라운드 준비", "음식점", "피트니스"];
+const categories = ["전체", "같은 건물", "골프 피팅", "골프장", "연습장", "라운드 준비"];
 const resources = [
   ...facilities.map((facility) => ({
     ...facility,
