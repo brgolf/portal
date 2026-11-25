@@ -80,6 +80,17 @@ export default function Portal() {
           </div>
         </section>
 
+        <section className="story shell" aria-labelledby="story-title">
+          <h2 id="story-title">사직에서 골프를 만나다</h2>
+          <p>
+            BR Golf는 사직 자이언츠파크 2층 바른골프피팅센터 동래점에서 시작했습니다.
+            클럽을 점검하고, 같은 건물에서 레슨과 연습 공간을 찾고, 다음 라운드를 준비할 수 있도록 사직동의 골프 정보를 한곳에 모았습니다.
+          </p>
+          <a className="story-link" href="#directory" onClick={() => { setQuery(""); setCategory("같은 건물"); setSavedOnly(false); }}>
+            자이언츠파크 골프 시설 보기 <ArrowDown size={16} aria-hidden="true" />
+          </a>
+        </section>
+
         <section className="directory shell" id="directory" aria-labelledby="directory-title">
           <div className="directory-heading">
             <h2 id="directory-title">{savedOnly ? "즐겨찾기" : "골프 디렉터리"}</h2>

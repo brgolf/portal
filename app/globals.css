@@ -49,6 +49,12 @@ h1 { font-size: clamp(4.25rem, 11vw, 9rem); letter-spacing: -.075em; line-height
 .hero-link { display: inline-flex; align-items: center; justify-content: center; gap: 13px; background: var(--cream); color: #263127; padding: 13px 18px; font-size: .9rem; font-weight: 700; }
 .hero-link:hover { background: #ead9b9; }
 
+.story { padding-block: clamp(44px, 6vw, 78px); text-align: center; border-bottom: 1px solid var(--line); }
+.story h2 { margin-bottom: 19px; }
+.story p { max-width: 36rem; margin: 0 auto 22px; color: var(--muted); line-height: 1.9; word-break: keep-all; }
+.story-link { display: inline-flex; align-items: center; gap: 8px; border-bottom: 1px solid currentColor; padding: 8px 0; color: var(--green); font-size: .9rem; font-weight: 700; }
+.story-link:hover { color: #795430; }
+
 .directory { padding-block: clamp(48px, 7vw, 98px); scroll-margin-top: 18px; }
 .directory-heading { text-align: center; margin-bottom: 34px; }
 h2 { font-size: clamp(1.85rem, 4vw, 3.2rem); letter-spacing: -.055em; line-height: 1.15; margin-bottom: 13px; }
