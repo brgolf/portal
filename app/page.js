@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowUpRight, Bookmark, Flag, MapPin, Search, Target, BookOpen, CloudSun, CalendarDays } from "lucide-react";
+import { ArrowDown, ArrowUpRight, ArrowUp, Bookmark, Flag, MapPin, Search, Target, BookOpen, CloudSun, CalendarDays } from "lucide-react";
 import facilities from "./facilities";
 
 const categories = ["전체", "같은 건물", "골프 피팅", "골프장", "연습장", "라운드 준비"];
@@ -70,32 +70,33 @@ export default function Portal() {
         </nav>
         <a className="favorite" href="#directory" onClick={showSaved}><Bookmark size={16} aria-hidden="true" /> 즐겨찾기</a>
       </div></header>
-      <main className="shell">
+      <main>
         <section className="hero" aria-labelledby="hero-title">
-          <div className="hero-pattern" aria-hidden="true"><Flag strokeWidth={0.65} /></div>
           <div className="hero-content">
-            <p className="eyebrow">BR GOLF PORTAL</p>
-            <h1 id="hero-title">다음 라운드,<br />여기서 시작하세요.</h1>
-            <p className="intro">부산 사직동과 주변의 골프 시설, 라운드 준비 정보를 찾아보세요.</p>
-            <form className="search" role="search" onSubmit={(event) => {
-              event.preventDefault();
-              document.getElementById("directory").scrollIntoView();
-            }}>
-              <Search size={20} aria-hidden="true" />
-              <input type="search" aria-label="포털 정보 검색" placeholder="사직동, 연습장, 시설명 검색" value={query} onChange={(event) => { setQuery(event.target.value); setCategory("전체"); setSavedOnly(false); }} />
-              <button type="submit">검색</button>
-            </form>
+            <p className="eyebrow">부산 · 사직동</p>
+            <h1 id="hero-title">BR Golf</h1>
+            <p className="intro">사직 자이언츠파크에서 시작하는 골프 가이드</p>
+            <a className="hero-link" href="#directory">골프 시설 둘러보기 <ArrowDown size={16} aria-hidden="true" /></a>
           </div>
-          <a className="down" aria-label="골프 디렉터리로 이동" href="#directory"><ArrowDown size={20} /></a>
         </section>
 
-        <section className="directory" id="directory" aria-labelledby="directory-title">
-          <h2 id="directory-title">{savedOnly ? "즐겨찾기" : "골프 디렉터리"}</h2>
-          {!savedOnly && <p className="copy directory-intro">사직 자이언츠파크 입점 업체를 먼저 소개합니다.</p>}
+        <section className="directory shell" id="directory" aria-labelledby="directory-title">
+          <div className="directory-heading">
+            <h2 id="directory-title">{savedOnly ? "즐겨찾기" : "골프 디렉터리"}</h2>
+            {!savedOnly && <p className="copy">사직 자이언츠파크 입점 업체를 먼저 소개합니다.</p>}
+          </div>
+          <form className="search" role="search" onSubmit={(event) => {
+            event.preventDefault();
+            document.getElementById("directory-results").scrollIntoView({ block: "nearest" });
+          }}>
+            <Search size={19} aria-hidden="true" />
+            <input type="search" aria-label="포털 정보 검색" placeholder="시설명, 동네, 골프장 날씨 검색" value={query} onChange={(event) => { setQuery(event.target.value); setCategory("전체"); setSavedOnly(false); }} />
+            <button type="submit">검색</button>
+          </form>
           <div className="filters" aria-label="카테고리">
             {categories.map((item) => <button type="button" key={item} aria-pressed={!savedOnly && category === item} onClick={() => { setCategory(item); setSavedOnly(false); }}>{item}</button>)}
           </div>
-          <p className="count" role="status">{query.trim() && `‘${query.trim()}’ 검색 결과 `}{results.length}개 항목</p>
+          <p className="count" id="directory-results" role="status">{query.trim() && `‘${query.trim()}’ 검색 결과 `}{results.length}개 항목</p>
           {results.length === 0 && <p className="empty">{savedOnly ? "저장한 항목이 없습니다." : "검색 결과가 없습니다. 다른 검색어나 카테고리를 선택해 보세요."}</p>}
           <div className="cards">
             {results.map(({ id, title, copy, category: label, icon: Icon, href, address, district, inBuilding }) => (
@@ -122,7 +123,7 @@ export default function Portal() {
           </div>
         </section>
 
-        <section className="checklist" id="checklist" aria-labelledby="checklist-title">
+        <section className="checklist shell" id="checklist" aria-labelledby="checklist-title">
           <div><p className="eyebrow">라운드 준비</p><h2 id="checklist-title">첫 라운드 체크리스트</h2></div>
           <ul>
             <li>티오프 시간과 골프장 도착 권장 시간을 확인하세요.</li>
@@ -131,7 +132,7 @@ export default function Portal() {
           </ul>
         </section>
       </main>
-      <footer className="shell footer"><span>BR GOLF</span><a href="#">맨 위로 ↑</a></footer>
+      <footer className="shell footer"><span className="brand">BR GOLF</span><a href="#">맨 위로 <ArrowUp size={15} aria-hidden="true" /></a></footer>
     </>
   );
 }
