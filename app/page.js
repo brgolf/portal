@@ -10,7 +10,7 @@ const resources = [
     ...facility,
     category: facility.category ?? "연습장",
     icon: MapPin,
-    href: `https://map.naver.com/p/search/${encodeURIComponent(`${facility.title} ${facility.address}`)}`,
+    href: `https://map.naver.com/p/search/${encodeURIComponent(facility.title)}`,
   })),
   { id: "courses", category: "골프장", title: "내 주변 골프장 찾기", copy: "지도에서 골프장 위치와 이용 정보를 확인하세요.", icon: MapPin, href: "https://map.naver.com/p/search/골프장" },
   { id: "practice", category: "연습장", title: "가까운 골프 연습장", copy: "실내외 연습장과 스크린 골프장을 찾아보세요.", icon: Target, href: "https://map.naver.com/p/search/골프%20연습장" },
