@@ -15,7 +15,15 @@ const resources = [
   { id: "courses", category: "골프장", title: "내 주변 골프장 찾기", copy: "지도에서 골프장 위치와 이용 정보를 확인하세요.", icon: MapPin, href: "https://map.naver.com/p/search/골프장" },
   { id: "practice", category: "연습장", title: "가까운 골프 연습장", copy: "실내외 연습장과 스크린 골프장을 찾아보세요.", icon: Target, href: "https://map.naver.com/p/search/골프%20연습장" },
   { id: "rules", category: "라운드 준비", title: "골프 규칙 살펴보기", copy: "라운드 전에 공식 골프 규칙을 확인하세요.", icon: BookOpen, href: "https://www.randa.org/ko-KR/rog/the-rules-of-golf" },
-  { id: "weather", category: "라운드 준비", title: "라운드 날씨 확인", copy: "출발 전 강수와 바람 예보를 확인하세요.", icon: CloudSun, href: "https://www.weather.go.kr/" },
+  {
+    id: "weather",
+    category: "라운드 준비",
+    title: "골프장 날씨",
+    copy: "네이버에서 부산 골프장별 강수와 바람 예보를 찾아보세요.",
+    keywords: "골프장날씨 라운드 날씨 라운드날씨",
+    icon: CloudSun,
+    href: `https://search.naver.com/search.naver?query=${encodeURIComponent("부산 골프장 날씨")}`,
+  },
   { id: "public", category: "골프장", title: "퍼블릭 골프장 찾기", copy: "일반 이용이 가능한 골프장을 지도에서 찾아보세요.", icon: Flag, href: "https://map.naver.com/p/search/퍼블릭%20골프장" },
   { id: "checklist", category: "라운드 준비", title: "첫 라운드 체크리스트", copy: "출발 전 챙길 준비물과 확인 사항을 살펴보세요.", icon: CalendarDays, href: "#checklist" },
 ];
